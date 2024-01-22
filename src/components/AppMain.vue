@@ -31,7 +31,7 @@ export default {
     
                 <div class="main-box p-5">
                     <header class="header-main bg-dark text-light p-4">
-                        Found X cards
+                        Found {{ store.myArrayCards.data.length }} cards
                     </header>
 
                     <div class="cards-box d-flex flex-wrap">
@@ -60,10 +60,8 @@ main {
                 background-color: white;
             }
 
-            // da qui css da prendere e mettere nel componente
-            .myCard{
-                width: calc((100% / 5));
-                background-color: orange;
+            .cards-box{
+                gap: 20px;
             }
         }
     }
