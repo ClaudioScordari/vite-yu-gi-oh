@@ -15,7 +15,11 @@ export default {
 
 <template>
     <header>
-        header
+        
+        <h1 class="p-3">
+            Yu-Gi-Oh Api
+        </h1>
+
     </header>
 </template>
 
