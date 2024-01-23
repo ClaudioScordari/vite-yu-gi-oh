@@ -19,7 +19,7 @@ export default {
     <div class="myCard" v-for="(oneCard, i) in store.myArrayCards.data">
         <!-- img card -->
         <div class="img-card">
-            <img class="w-100" :src="oneCard.card_images[0].image_url" alt="img-cards">
+            <img class="w-100" :src="oneCard.card_images[0].image_url" :alt="oneCard.name">
         </div>
 
         <!-- info card -->
@@ -43,5 +43,7 @@ export default {
 .myCard{
     width: calc((100% / 5) - 20px);
     background-color: orange;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>

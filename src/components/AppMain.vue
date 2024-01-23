@@ -31,7 +31,7 @@ export default {
     
                 <div class="main-box p-5">
                     <header class="header-main bg-dark text-light p-4">
-                        Found {{ store.myArrayCards.data.length }} cards
+                        Found cards
                     </header>
 
                     <div class="cards-box d-flex flex-wrap">
