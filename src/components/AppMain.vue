@@ -1,9 +1,10 @@
 <script>
 import { store } from '../store.js';
 import AppMyCard from './AppMyCard.vue';
+import axios from "axios";
 
 export default {
-    data(){
+    data() {
         return {
             store
         }
@@ -12,7 +13,15 @@ export default {
         AppMyCard
     },
     methods: {
-        
+
+    },
+    mounted() {
+        // si deve riempire l'array degli archetipi per stampare le options
+        axios
+            .get(this.store.apiArchetype)
+            .then((response) => {
+                this.store.arrayArchetype = response.data;
+            });
     }
 }
 </script>
@@ -23,23 +32,29 @@ export default {
     <main>
         <div class="my-bg">
             <div class="my-container">
+
                 <div class="py-4">
-                    <select name="" id="">
-                        <option value="1">Alien</option>
+                    <select @change="$emit('sendEvent')" v-model="store.valueOption">
+                        <option selected disabled value="">Seleziona l'archetipo</option>
+
+                        <option v-for="(elem, i) in store.arrayArchetype" :value="elem.archetype_name" :key="i">
+                            {{ elem.archetype_name }}
+                        </option>
                     </select>
                 </div>
-    
+
                 <div class="main-box p-5">
                     <header class="header-main bg-dark text-light p-4">
-                        Found cards
+                        Found {{ store.myArrayCards.length }} cards
                     </header>
 
                     <div class="cards-box d-flex flex-wrap">
-                        
+
                         <AppMyCard />
 
                     </div>
                 </div>
+
             </div>
         </div>
     </main>
@@ -48,23 +63,22 @@ export default {
 <!-- ------------------------------------------------------------------------------- -->
 
 <style lang="scss" scoped>
-
 main {
-    .my-bg{
+    .my-bg {
         background-color: orange;
-        .my-container{
+
+        .my-container {
             width: 80%;
             margin: 0 auto;
 
-            .main-box{
+            .main-box {
                 background-color: white;
             }
 
-            .cards-box{
+            .cards-box {
                 gap: 20px;
             }
         }
     }
 }
-
 </style>

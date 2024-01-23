@@ -6,9 +6,8 @@ import axios from "axios";
 import { store } from './store.js';
 
 export default {
-    data(){
+    data() {
         return {
-            apiYuGiOh: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0',
             store // in questo caso il nome della chiave, e il nome del valore della chiave coincidono... quindi si può lasciare store
         }
     },
@@ -17,16 +16,33 @@ export default {
         AppMain,
         AppFooter
     },
-    methods: {},
-    mounted(){
-        axios
-            .get(this.apiYuGiOh)
-            .then((response) => {
-                console.log(response.data);
+    methods: {
+        getApiArchetypeFiltred() {
 
-                this.store.myArrayCards = response.data;
-                console.log(this.store.myArrayCards);
-            });
+            // chiamata Api per tutte le carte
+            if (store.valueOption.length == 0) {
+                axios
+                    .get(this.store.apiYuGiOhCards)
+                    .then((response) => {
+                        this.store.myArrayCards = response.data;
+                    });
+            }
+            // chiamata api sugli archetipi filtrati
+            else if (store.valueOption.length > 0) {
+                axios
+                    .get(this.store.apiYuGiOhCards, {
+                        params: {
+                            archetype: this.store.valueOption
+                        }
+                    })
+                    .then((response) => {
+                        this.store.myArrayCards = response.data;
+                    });
+            }
+        }
+    },
+    created() {
+        this.getApiArchetypeFiltred()
     }
 }
 </script>
@@ -34,13 +50,11 @@ export default {
 <!-- ------------------------------------------------------------------------------- -->
 
 <template>
+    <AppHeader />
 
-    <AppHeader/>
+    <AppMain @sendEvent="getApiArchetypeFiltred()" />
 
-    <AppMain/>
-
-    <AppFooter/>
-
+    <AppFooter />
 </template>
 
 <!-- ------------------------------------------------------------------------------- -->
